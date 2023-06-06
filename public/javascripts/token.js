@@ -59,12 +59,17 @@ async function loginAttempt(username, password) {
     }
 
     if (data === null) {
-        alert("Login failed");
+        window.location.body = JSON.stringify({
+            error: "Login failed"
+        });
+        window.location.method = "POST";
+        window.location.href = "/user";
+
+
     } else {
         const {serviceTicket} = data.response;
         token.set(serviceTicket);
         window.location.href = "/";
-
     }
 }
 

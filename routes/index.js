@@ -1,30 +1,33 @@
-let express = require('express');
+const express = require('express');
 const axios = require("axios");
-let router = express.Router();
+const router = express.Router();
 
-/* GET home page. */
 router.get('/', function (req, res, next) {
     res.render('index', {title: 'Start - Netzwerk Verwaltung'});
 });
 
 router.get('/user', function (req, res, next) {
-    res.render('user', {title: 'Anmeldung - Netzwerk Verwaltung'});
+    if (req.cookies.error) {
+        res.render('user', {title: 'Anmeldung - Netzwerk Verwaltung', error: req.cookies.error});
+    } else {
+        res.render('user', {title: 'Anmeldung - Netzwerk Verwaltung'});
+    }
 });
 
 router.get('/inventory', function (req, res, next) {
-    res.render('inventory', {title: 'Inventar - Netzwerk Verwaltung'});
+    res.render('inventory', {title: 'Inventar - Netzwerk Verwaltung', ticket: req.cookies.ticket});
 });
 
 router.get('/hosts', function (req, res, next) {
-    res.render('hosts', {title: 'Hosts - Netzwerk Verwaltung'});
+    res.render('hosts', {title: 'Hosts - Netzwerk Verwaltung', ticket: req.cookies.ticket});
 });
 
 router.get('/discovery', function (req, res, next) {
-    res.render('discovery', {title: 'Erkennung - Netzwerk Verwaltung'});
+    res.render('discovery', {title: 'Erkennung - Netzwerk Verwaltung', ticket: req.cookies.ticket});
 });
 
 router.get('/credentials', function (req, res, next) {
-    res.render('credentials', {title: 'Anmeldedaten - Netzwerk Verwaltung'});
+    res.render('credentials', {title: 'Anmeldedaten - Netzwerk Verwaltung', ticket: req.cookies.ticket});
 });
 
 module.exports = router;
