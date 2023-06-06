@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+  </body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benutzer - Netzwerk Verwaltung</title>
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Netzwerk Verwaltung</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+              aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html">Start</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="discovery.html">Geräteerkennung</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="host.html">Geräte</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="credentials.html">Anmeldedaten</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="assurance.html">Sicherheit</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="inventory.html">Inventar</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+                    <a class="nav-link active" aria-current="page" href="user.html">Benutzer/Token</a>
+                </span>
+      </div>
+    </div>
+  </nav>
+</header>
+<main>
+  <div class="container-fluid text-center margin-top">
+    <br>
+    <h1>Anmeldung</h1>
+  </div>
+  <div class="container">
+    <label for="inputUsername" class="form-label">Nutzername</label>
+    <input type="text" id="inputUsername" class="form-control" aria-labelledby="passwordHelpBlock">
+
+    <label for="inputPassword" class="form-label">Passwort</label>
+    <input type="password" id="inputPassword" class="form-control" aria-labelledby="passwordHelpBlock">
+    <br>
+    <input class="btn btn-primary" id="user-login-button" type="submit" value="Authentifizieren">
+  </div>
+  </div>
+
+</main>
+</body>
+<script src="../public/js/bootstrap.bundle.min.js"></script>
+<script src="../public/js/custom/token.js"></script>
+</html>
