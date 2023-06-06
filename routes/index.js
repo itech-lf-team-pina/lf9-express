@@ -13,7 +13,7 @@ router.get('/user', function (req, res, next) {
         res.render('user', {title: 'Anmeldung - Netzwerk Verwaltung'});
     }
 });
-
+//TODO: hab hier cookies für das ticket hinzugefügt, ticket wird allerdings bisher nur im localstorage gespeichert.
 router.get('/inventory', function (req, res, next) {
     res.render('inventory', {title: 'Inventar - Netzwerk Verwaltung', ticket: req.cookies.ticket});
 });
