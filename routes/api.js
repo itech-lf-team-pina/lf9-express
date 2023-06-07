@@ -1,7 +1,6 @@
-var express = require('express');
+const express = require('express');
 const axios = require("axios");
-const http = require("http");
-var router = express.Router();
+const router = express.Router();
 
 /* GET users listing. */
 router.post('/ticket', function(req, res, next) {
