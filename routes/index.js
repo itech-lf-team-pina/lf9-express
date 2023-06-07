@@ -7,11 +7,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/user', function (req, res, next) {
-    if (req.cookies.error) {
-        res.render('user', {title: 'Anmeldung - Netzwerk Verwaltung', error: req.cookies.error});
-    } else {
-        res.render('user', {title: 'Anmeldung - Netzwerk Verwaltung'});
-    }
+        res.render('user', {title: 'Anmeldung - Netzwerk Verwaltung', isLoggedOut: true});
 });
 //TODO: hab hier cookies für das ticket hinzugefügt, ticket wird allerdings bisher nur im localstorage gespeichert.
 router.get('/inventory', function (req, res, next) {

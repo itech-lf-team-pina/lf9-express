@@ -25,37 +25,5 @@ const documentReady = () => {
     }
 }
 
-async function loginAttempt(username, password) {
-    let data = null;
-
-    const result = await fetch("http://localhost:3000/api/ticket", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    });
-
-    if (result.ok) {
-        data = await result.json();
-    }
-
-    if (data === null) {
-        window.location.body = JSON.stringify({
-            error: "Login failed"
-        });
-        window.location.method = "POST";
-        window.location.href = "/user";
-
-
-    } else {
-        const {serviceTicket} = data.response;
-        token.set(serviceTicket);
-        window.location.href = "/";
-    }
-}
 
 document.addEventListener("DOMContentLoaded", documentReady);

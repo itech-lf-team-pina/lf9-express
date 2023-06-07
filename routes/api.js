@@ -33,4 +33,25 @@ router.post('/ticket', function(req, res, next) {
     });
 });
 
+router.get('/logout', function (req, res, next) {
+    const token = req.cookies.token;
+
+    axios.delete(`http://127.0.0.1:58000/api/v1/ticket/${token}`, {
+        headers: {
+            "X-Auth-Token": token
+        },
+        data: {}
+    }).then((response) => {
+        if (response.status === 200) {
+            res.clearCookie("token");
+            res.redirect("/user");
+        }
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).json(error);
+    });
+
+
+});
+
 module.exports = router;
