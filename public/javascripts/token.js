@@ -1,42 +1,27 @@
 const token = {
     get: () => {
-        return sessionStorage.getItem('token');
+        // get token from cookie
+        const cookies = document.cookie.split("; ");
+        const cookie = cookies.find((cookie) => cookie.startsWith("token="));
+        if (cookie === undefined) {
+            return null;
+        }
+        return cookie.split("=")[1];
     },
-    set: (token) => {
-        return sessionStorage.setItem('token', token);
+    set: (tokenToSet) => {
+        const d = new Date();
+        d.setTime(d.getTime() + (900 * 1000));
+        // set token or add token to cookie
+        document.cookie = `token=${tokenToSet};expires=${d.toUTCString()};`;
     }
-}
-
-try {
-    const userLoginButton = window.document.getElementById("user-login-button");
-
-    const password = window.document.getElementById("inputPassword");
-    const username = window.document.getElementById("inputUsername");
-
-    userLoginButton.addEventListener("click", async (e) => {
-        await loginAttempt(username.value, password.value);
-    })
-
-    password.addEventListener("keydown", async (e) => {
-        if (e.key === "Enter") {
-            await loginAttempt(username.value, password.value);
-        }
-    });
-
-    username.addEventListener("keydown", async (e) => {
-        if (e.key === "Enter") {
-            await loginAttempt(username.value, password.value);
-        }
-    });
-
-} catch (e) {
-    console.log("ERROR", e);
 }
 
 
 const documentReady = () => {
     if (token.get() === null || undefined) {
-        window.location.href = "/user";
+        if (window.location.pathname.includes("/user") === false) {
+            window.location.href = "/user";
+        }
     }
 }
 

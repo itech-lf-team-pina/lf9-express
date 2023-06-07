@@ -1,21 +1,152 @@
-
 {% extends 'layout.twig' %}
 
 {% block body %}
     <div class="container-fluid text-center margin-top">
-        <h1>{{title}}</h1>
+        <h1>{{ title }}</h1>
         <br>
         <h1>Inventar</h1>
         <div class="container">
-            <label for="inputUsername" class="form-label">Nutzername</label>
-            <input type="text" id="inputUsername" class="form-control" aria-labelledby="passwordHelpBlock">
 
-            <label for="inputPassword" class="form-label">Passwort</label>
-            <input type="password" id="inputPassword" class="form-control" aria-labelledby="passwordHelpBlock">
-            <br>
-            <input class="btn btn-primary" id="user-login-button" type="submit" value="Authentifizieren">
+            <div class="accordion" id="network_devices">
+                {% for network_device in inventory %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button
+                                    class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#{{ network_device.id }}"
+                                    aria-expanded="false"
+                                    aria-controls="{{ network_device.id }}"
+                            >
+                                {{ network_device.hostname }} <small>({{ network_device.id }})&nbsp; </small> <span class="badge p-1 rounded-pill text-bg-info">{{ network_device.reachabilityStatus }}</span>
+
+                            </button>
+                        </h2>
+                        <div id="{{ network_device.id }}"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#network_devices">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                {% if network_device.reachabilityFailureReason.length > 0 %}
+                                                    <div>
+                                                        <h3>Gerät nicht erreichbar:</h3>
+                                                        <p>{{ network_device.reachabilityFailureReason }}</p>
+                                                    </div>
+                                                {% endif %}
+
+                                                {% if network_device.errorDescription.length > 0 %}
+                                                    <div>
+                                                        <h3>Gerät hat einen Fehler:</h3>
+                                                        <p>{{ network_device.errorDescription }}</p>
+                                                    </div>
+                                                {% endif %}
+
+                                                <h5 class="card-title">Generelles</h5>
+                                                <div class="container text-center">
+                                                    <div class="row row-cols-2">
+
+                                                        <div class="col">Typ</div>
+                                                        <div class="col">{{ network_device.type }}</div>
+
+                                                        <div class="col">Anzahl an Interfaces</div>
+                                                        <div class="col">{{ network_device.interfaceCount }}</div>
+
+                                                        <div class="col">Management Status</div>
+                                                        <div class="col">{{ network_device.inventoryStatusDetail }}</div>
+
+                                                        <div class="col">MAC</div>
+                                                        <div class="col">{{ network_device.macAddress | replace({".": ":"})}}</div>
+
+                                                        <div class="col">Management IP</div>
+                                                        <div class="col">{{ network_device.managementIpAddress }}</div>
+
+                                                        <div class="col">Uptime</div>
+                                                        <div class="col">{{ network_device.upTime }}</div>
+
+                                                        <div class="col">Seriennummer</div>
+                                                        <div class="col">{{ network_device.serialNumber }}</div>
+
+                                                        <div class="col">Anmeldedaten ID</div>
+                                                        <div class="col">{{ network_device.globalCredentialId }}</div>
+
+                                                        <div class="col">Plattform ID</div>
+                                                        <div class="col">{{ network_device.platformId }}</div>
+
+                                                        <div class="col">Produkt ID</div>
+                                                        <div class="col">{{ network_device.productId }}</div>
+
+                                                        <div class="col">Software Version</div>
+                                                        <div class="col">{{ network_device.softwareVersion }}</div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3>Verbundene Netzwerkgeräte</h3>
+                                        <table class="table table-striped ">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">IP-Adresse</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for address in network_device.connectedNetworkDeviceIpAddress %}
+                                                <tr>
+                                                    <td>{{ address }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col">
+                                        <h3>Verbundene Gerätenamen</h3>
+                                        <table class="table table-striped ">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for name in network_device.connectedNetworkDeviceName %}
+                                                <tr>
+                                                    <td>{{ name }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col">
+                                        <h3>Verbundene Interfaces</h3>
+                                        <table class="table table-striped ">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Interface Name</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for interface in network_device.connectedInterfaceName %}
+                                                <tr>
+                                                    <td>{{ interface }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-    <script src="/javascripts/token.js"></script>
-
 {% endblock %}

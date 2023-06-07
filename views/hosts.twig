@@ -6,15 +6,82 @@
         <h1>{{title}}</h1>
         <br>
         <div class="container">
-            <label for="inputUsername" class="form-label">Nutzername</label>
-            <input type="text" id="inputUsername" class="form-control" aria-labelledby="passwordHelpBlock">
+            <div class="container-md">
+                <div class="card">
+                    <h5 class="card-header">Filter</h5>
+                    <div class="card-body">
+                        <form class="row">
+                            <div class="col">
+                                <label for="hostname">Hostname</label>
+                                <input type="text" id="hostname" name="hostname">
+                            </div>
+                            <div class="col">
+                                <label for="ip">IP-Adresse</label>
+                                <input type="text" id="ip" name="ip">
+                            </div>
+                            <div class="col">
+                                <label for="mac">MAC-Adresse</label>
+                                <input type="text" id="mac" name="mac">
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <label class="col" for="sortBy">Sortierung</label>
+                                    <select id="sortBy" class="col form-select" aria-label="Sort By Selection">
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                            </div>
 
-            <label for="inputPassword" class="form-label">Passwort</label>
-            <input type="password" id="inputPassword" class="form-control" aria-labelledby="passwordHelpBlock">
+                        </form>
+                        <br>
+                        <a href="#" class="btn btn-primary">Filtern</a>
+                    </div>
+                </div>
+            </div>
             <br>
-            <input class="btn btn-primary" id="user-login-button" type="submit" value="Authentifizieren">
+
+            <table class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">IP-Adresse</th>
+                    <th scope="col">Hostname</th>
+                    <th scope="col">MAC</th>
+                    <th scope="col">Typ</th>
+                    <th scope="col">Interface Name</th>
+                    <th scope="col">Interface IP</th>
+                    <th scope="col">Interface Netzwerkname</th>
+                    <th scope="col">Erreichbar per Ping?</th>
+                    <th scope="col">Zuletzt aktualisiert</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for host in hosts %}
+                    <tr>
+                        <th scope="row">{{ host.id }}</th>
+                        <td>{{ host.hostIp }}</td>
+                        <td>{{ host.hostName }}</td>
+                        <td>{{ host.hostMac | replace({'.':':'})}}</td>
+                        <td>{{ host.hostType }}</td>
+                        <td>{{ host.connectedInterfaceName }}</td>
+                        <td>{{ host.connectedNetworkDeviceIpAddress }}</td>
+                        <td>{{ host.connectedNetworkDeviceName }}</td>
+                        {% if host.pingStatus == "SUCCESS" %}
+                            <td class="text-success"><span class="badge rounded-pill text-bg-success">Ja</span>
+                            </td>
+                        {% else %}
+                            <td class="text-danger"><span class="badge rounded-pill text-bg-danger">Nein</span>
+                            </td>
+                        {% endif %}
+                        <td>{{ host.lastUpdated | date('d.m.Y \u\m H:m', 'Europe/Berlin')}} Uhr</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-    <script src="/javascripts/token.js"></script>
 
 {% endblock %}

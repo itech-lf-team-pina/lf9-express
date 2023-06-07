@@ -16,15 +16,17 @@
         <br>
         <h1>Anmeldung</h1>
         <div class="container">
-            <label for="inputUsername" class="form-label">Nutzername</label>
-            <input type="text" id="inputUsername" class="form-control">
+            <form>
+                <div class="form-group">
+                    <label for="inputUsername" class="form-label">Nutzername</label>
+                    <input autocomplete="username" type="text" id="inputUsername" class="form-control">
 
-            <label for="inputPassword" class="form-label">Passwort</label>
-            <input type="password" id="inputPassword" class="form-control">
-            <br>
-            <input class="btn btn-primary" id="user-login-button" type="submit" value="Authentifizieren">
+                    <label for="inputPassword" class="form-label">Passwort</label>
+                    <input autocomplete="current-password" type="password" id="inputPassword" class="form-control">
+                    <br>
+                    <button class="btn btn-primary" id="user-login-button">Authentifizieren</button>
+                </div>
+            </form>
         </div>
     </div>
-    <script src="/javascripts/token.js"></script>
-
 {% endblock %}

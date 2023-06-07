@@ -1,46 +1,54 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ title }}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    {#  <link rel="stylesheet" href="/stylesheets/style.css"> #}
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
 </head>
 <body>
 <header>
-  <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Netzwerk Verwaltung</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-              aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Start</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/discovery">Geräteerkennung</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/hosts">Geräte</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/credentials">Anmeldedaten</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/inventory">Inventar</a>
-          </li>
-        </ul>
-        <span class="navbar-text">
-                    <a class="nav-link" href="/user">Benutzer/Token</a>
-                </span>
-      </div>
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Netzwerk Verwaltung</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Start</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/discovery">Geräteerkennung</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hosts">Geräte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/credentials">Anmeldedaten</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/inventory">Inventar</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">Benutzer/Token</a>
+                    </li>
+                    {% if isLoggedOut is not defined %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/logout">Logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>
 <main>
   {% block body %}{% endblock %}
@@ -48,4 +56,6 @@
 </main>
 </body>
 <script src="/javascripts/bootstrap.js"></script>
+<script src="/javascripts/token.js"></script>
+{% block javascript %}{% endblock %}
 </html>
