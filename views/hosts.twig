@@ -23,15 +23,10 @@
                                 <label for="mac">MAC-Adresse</label>
                                 <input type="text" id="mac" name="mac">
                             </div>
+
                             <div class="col">
-                                <div class="row">
-                                    <label class="col" for="sortBy">Sortierung</label>
-                                    <select id="sortBy" class="col form-select" aria-label="Sort By Selection">
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
+                                <label for="interfaceNameInput">Interface Netzwerkname</label>
+                                <input type="text" id="interfaceNameInput" name="interfaceNameInput">
                             </div>
 
                         </form>
@@ -58,9 +53,9 @@
 
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="host-table-body">
                 {% for host in hosts %}
-                    <tr>
+                    <tr id="{{ host.id }}">
                         <th scope="row">{{ host.id }}</th>
                         <td>{{ host.hostIp }}</td>
                         <td>{{ host.hostName }}</td>
@@ -68,7 +63,7 @@
                         <td>{{ host.hostType }}</td>
                         <td>{{ host.connectedInterfaceName }}</td>
                         <td>{{ host.connectedNetworkDeviceIpAddress }}</td>
-                        <td>{{ host.connectedNetworkDeviceName }}</td>
+                        <td class="interfaceName">{{ host.connectedNetworkDeviceName }}</td>
                         {% if host.pingStatus == "SUCCESS" %}
                             <td class="text-success"><span class="badge rounded-pill text-bg-success">Ja</span>
                             </td>

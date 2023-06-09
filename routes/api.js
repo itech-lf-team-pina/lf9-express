@@ -3,7 +3,7 @@ const axios = require("axios");
 const router = express.Router();
 
 /* GET users listing. */
-router.post('/ticket', function(req, res, next) {
+router.post('/ticket', function (req, res, next) {
     const body = req.body;
 
     axios.post("http://127.0.0.1:58000/api/v1/ticket", {
@@ -18,7 +18,7 @@ router.post('/ticket', function(req, res, next) {
     });
 });
 
-router.post('/ticket', function(req, res, next) {
+router.post('/ticket', function (req, res, next) {
     const body = req.body;
 
     axios.post("http://127.0.0.1:58000/api/v1/ticket", {
@@ -49,8 +49,47 @@ router.get('/logout', function (req, res, next) {
         console.log(error);
         res.status(500).json(error);
     });
+});
 
+router.delete('/credential/:credID', function (req, res, next) {
+    const token = req.cookies.token;
+    const credID = req.params.credID;
 
+    axios.delete(`http://127.0.0.1:58000/api/v1/global-credential/${credID}`, {
+        headers: {
+            "X-Auth-Token": token
+        },
+        data: {}
+    }).then((response) => {
+        res.status(response.status).json(response.data)
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).json(error);
+    });
+});
+
+router.post('/credential/', function (req, res, next) {
+    const token = req.cookies.token;
+    const body = req.body;
+
+    axios.post(
+        `http://127.0.0.1:58000/api/v1/global-credential/cli`,
+        body,
+        {
+            headers: {
+                "X-Auth-Token": token
+            }
+        })
+        .then((response) => {
+            res.status(response.status).json(response.data)
+
+        })
+
+        .catch((error) => {
+            console.table(error.response.data);
+            console.log(error.code);
+            res.status(500).json(error);
+        });
 });
 
 module.exports = router;

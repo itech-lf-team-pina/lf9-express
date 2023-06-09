@@ -5,7 +5,7 @@
     <div class="container-fluid text-center margin-top">
         <h1>{{ title }}</h1>
         <br>
-        <div class="container">
+        <div class="alert alert-light" role="alert">
             <p> Willkommen bei unserer Netzwerkverwaltungsanwendung!
                 Wir freuen uns, Sie in unserer Anwendung willkommen zu heißen. <br>
                 <br> Hier können Sie Ihr Netzwerk effizient verwalten und überwachen.
@@ -19,5 +19,70 @@
                 <br><strong>Willkommen an Bord!</strong>
             </p>
         </div>
+
+        <div class="container">
+            <h3>Zeitverlauf</h3>
+            <div class="row card mb-md-3">
+                <div class="col">
+                    <h5>Netzwerkgesundheit</h5>
+                    <canvas id="health"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+
+        const ctx = document.getElementById('health');
+
+
+        const labels = {{ routerHealth.labels | json_encode }};
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Router Health',
+                data: {{ routerHealth.data | json_encode }},
+                fill: false,
+                borderColor: 'rgb(87,75,192)',
+                tension: 0.1
+            }, {
+                label: 'Switches Health',
+                data: {{ switchesHealth.data | json_encode }},
+                fill: false,
+                borderColor: 'rgb(166,203,57)',
+                tension: 0.1
+            }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Gesundheit in %'
+                        }
+                    },
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Zeit'
+                        }
+                    }
+                }
+            }
+
+        };
+
+        new Chart(ctx, config);
+
+
+    </script>
 {% endblock %}
