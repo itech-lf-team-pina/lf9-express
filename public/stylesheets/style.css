@@ -1,9 +1,13 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #212529;
+
+.--hidden{
+  display: none;
+}
+.btn-conbtainer{
+  gap: 16px;
 }
 
-a {
-  color: #00B7FF;
+#inputPassword,#inputUsername{
+  width: auto !important;
+  margin-left: auto;
+  margin-right: auto;
 }
