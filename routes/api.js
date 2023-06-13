@@ -10,7 +10,6 @@ router.post('/ticket', function (req, res, next) {
         username: body.username,
         password: body.password
     }).then((response) => {
-        console.log(response.data.response.serviceTicket);
         res.json(response.data)
     }).catch((error) => {
         console.log(error);

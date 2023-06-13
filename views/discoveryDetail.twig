@@ -1,0 +1,129 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <div class="container-fluid text-center margin-top">
+        <h1>{{ title }}</h1>
+        <br>
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/discovery">Erkennung</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Detailseite</li>
+                </ol>
+            </nav>
+            <div class="accordion" id="network_devices_list">
+                {% for network_device in network_devices %}
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button
+                                    class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#{{ network_device.id }}"
+                                    aria-expanded="false"
+                                    aria-controls="{{ network_device.id }}"
+                            >
+                                {{ network_device.hostname }} <small>({{ network_device.id }})&nbsp; </small> <span
+                                        class="badge p-1 rounded-pill text-bg-info">{{ network_device.reachabilityStatus }}</span>
+
+                            </button>
+                        </h2>
+                        {% if network_device.id is defined %}
+                        <div id="{{ network_device.id }}"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#network_devices_list">
+
+                        {% else %}
+                            <div id="network_device_{{ network_device.id }}"
+                                 class="accordion-collapse collapse show"
+                                 data-bs-parent="#network_devices_list">
+                        {% endif %}
+
+                            <div class="accordion-body">
+                                {% if network_device.reachabilityFailureReason.length > 0 %}
+                                    <div>
+                                        <h3>Gerät nicht erreichbar:</h3>
+                                        <p>{{ network_device.reachabilityFailureReason }}</p>
+                                    </div>
+                                {% endif %}
+
+                                {% if network_device.errorDescription.length > 0 %}
+                                    <div>
+                                        <h3>Gerät hat einen Fehler:</h3>
+                                        <p>{{ network_device.errorDescription }}</p>
+                                    </div>
+                                {% endif %}
+
+                                <h5 class="card-title">{{ network_device.hostname }}</h5>
+
+                                <div class="row row-cols-2">
+                                    <div class="col">Zuletzt aktualisiert</div>
+                                    <div class="col">{{ network_device.lastUpdated | date('d.m.Y \u\m H:m', 'Europe/Berlin') }}</div>
+
+                                    <div class="col">bootDatetime</div>
+                                    <div class="col">{{ network_device.bootDateTime }}</div>
+
+                                    <div class="col">CLI Status</div>
+                                    <div class="col">{{ network_device.cliStatus }}</div>
+
+                                    <div class="col">Management Status</div>
+                                    <div class="col">{{ network_device.inventoryStatusDetail }}</div>
+
+                                    <div class="col">Family</div>
+                                    <div class="col">{{ network_device.family }}</div>
+
+                                    <div class="col">Anmeldedaten ID</div>
+                                    <div class="col">{{ network_device.globalCredentialId }}</div>
+
+                                    <div class="col">Uptime</div>
+                                    <div class="col">{{ network_device.upTime }}</div>
+
+                                    <div class="col">Seriennummer</div>
+                                    <div class="col">{{ network_device.serialNumber }}</div>
+
+                                    <div class="col">MAC</div>
+                                    <div class="col">{{ network_device.macAddress | replace({'.':':'}) }}</div>
+
+                                    <div class="col">Management IP</div>
+                                    <div class="col">{{ network_device.managementIpAddress }}</div>
+
+                                    <div class="col">Memory Size</div>
+                                    <div class="col">{{ network_device.memorySize }}</div>
+
+                                    <div class="col">Ping Status</div>
+                                    <div class="col">{{ network_device.pingStatus }}</div>
+
+                                    <div class="col">Erreichbarkeitsstatus (Inventar)</div>
+                                    <div class="col">{{ network_device.inventoryReachabilityStatus }}</div>
+
+                                    <div class="col">lineCardCount</div>
+                                    <div class="col">{{ network_device.lineCardCount }}</div>
+
+                                    <div class="col">Location Name</div>
+                                    <div class="col">{{ network_device.locationName }}</div>
+
+                                    <div class="col">Platform ID</div>
+                                    <div class="col">{{ network_device.platformId }}</div>
+
+                                    <div class="col">Erreichbarkeitsstatus</div>
+                                    <div class="col">{{ network_device.reachabilityStatus }}</div>
+
+                                    <div class="col">Rolle</div>
+                                    <div class="col">{{ network_device.role }}</div>
+
+                                    <div class="col">Rollenquelle</div>
+                                    <div class="col">{{ network_device.roleSource }}</div>
+
+                                    <div class="col">Softwareversion</div>
+                                    <div class="col">{{ network_device.softwareVersion }}</div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

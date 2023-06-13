@@ -110,8 +110,72 @@ router.get('/hosts', function (req, res, next) {
 });
 
 router.get('/discovery', function (req, res, next) {
-    res.render('discovery', {title: 'Erkennung - Netzwerk Verwaltung', ticket: req.cookies.ticket});
+    const token = req.cookies.token;
+    const params = req.params;
+
+    axios.get("http://127.0.0.1:58000/api/v1/discovery", {
+        headers: {
+            "X-Auth-Token": token
+        },
+        params: params
+    })
+        .then((response) => {
+            if (response.data.response === null) {
+                res.render('discovery', {
+                    title: 'Erkennung - Netzwerk Verwaltung',
+                    discoveries: []
+                });
+            }
+            res.render('discovery', {
+                title: 'Erkennung - Netzwerk Verwaltung',
+                discoveries: response.data.response
+            });
+        }).catch((error) => {
+        console.log(error);
+        res.render('discovery', {
+            title: 'Erkennung - Netzwerk Verwaltung',
+            discoveries: []
+        })
+    });
 });
+
+router.get('/discovery/:discoveryId', function (req, res, next) {
+    const token = req.cookies.token;
+
+    if (req.params.discoveryId === undefined) {
+        res.render('discovery', {
+            title: 'Erkennung - Netzwerk Verwaltung',
+            discoveries: []
+        });
+
+    }
+
+    axios.get(`http://127.0.0.1:58000/api/v1/discovery/${req.params.discoveryId}/network-device`, {
+        headers: {
+            "X-Auth-Token": token
+        },
+    })
+        .then((response) => {
+
+            if (response.data.response === null) {
+                res.render('discoveryDetail', {
+                    title: `Details zur Erkennung - Netzwerk Verwaltung`,
+                    network_devices: []
+                });
+            }
+            res.render('discoveryDetail', {
+                title: `Details zur Erkennung - Netzwerk Verwaltung`,
+                network_devices: response.data.response
+            });
+        }).catch((error) => {
+        console.log(error);
+        res.render('discoveryDetail', {
+            title: 'Details zur Erkennung - Netzwerk Verwaltung',
+            network_devices: []
+        })
+    });
+});
+
 
 router.get('/credentials', function (req, res, next) {
     const token = req.cookies.token;
