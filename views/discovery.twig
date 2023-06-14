@@ -93,12 +93,22 @@
                         <td>{{ discovery.timeOut }}</td>
                         <td>{{ discovery.discoveryCondition }}</td>
                         <td>
-                            <button id="deleteButton_{{ discovery.id }}" data-id="{{ discovery.id }}"
-                                    class="btn btn-outline-danger btn-sm" type="button">
+                            <button 
+                                id="deleteButton_{{ discovery.id }}"
+                                data-id="{{ discovery.id }}"
+                                class="btn btn-outline-danger btn-sm"
+                                type="button"
+                                label="Löschen"
+                            >
                                 <i class="bi bi-x btn-sm" style="font-size: 2rem; color: white;"></i>
                             </button>
-                            <button id="showDetails_{{ discovery.id }}" data-id="{{ discovery.id }}"
-                                    class="btn btn-outline-info btn-sm" type="button">
+                            <button
+                                id="showDetails_{{ discovery.id }}" 
+                                data-id="{{ discovery.id }}"
+                                class="btn btn-outline-info btn-sm"
+                                type="button"
+                                label="Weitere Einzelheiten"
+                            >
                                 <i class="bi bi-info btn-sm" style="font-size: 2rem; color: white;"></i>
                             </button>
                         </td>
@@ -115,7 +125,7 @@
         const deleteButton_{{ discovery.id | replace({"-": "_"}) }} = document.getElementById("deleteButton_{{ discovery.id }}");
         const showDetails_{{ discovery.id | replace({"-": "_"}) }} = document.getElementById("showDetails_{{ discovery.id }}");
         deleteButton_{{ discovery.id | replace({"-": "_"}) }}.addEventListener("click", function () {
-            deleteCredential(deleteButton_{{ discovery.id | replace({"-": "_"}) }}.dataset.id);
+            deleteDiscovery(deleteButton_{{ discovery.id | replace({"-": "_"}) }}.dataset.id);
         });
 
         showDetails_{{ discovery.id | replace({"-": "_"}) }}.addEventListener("click", function () {
@@ -141,10 +151,13 @@
         const addNewCredentialButton = document.getElementById('add-discovery-button');
 
         addNewCredentialButton.addEventListener('click', async function (event) {
+
             event.preventDefault();
             const form = document.querySelector('#discovery-add-form');
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
+
+            console.log(data)
 
             if (data.name === "") {
                 alert("Bitte geben sie einen Namen an!");
@@ -157,13 +170,13 @@
             }
 
             if (data.ipAddressList === "") {
-                alert("Bitte geben sie einen Typ der Geräteerkennung an!");
+                alert("Bitte geben sie eine oder mehrere IP Addressen an!");
                 return;
             } else {
                 data.ipAddressList = data.ipAddressList.split(",");
             }
 
-            const response = await fetch('/api/credential/', {
+            const response = await fetch('/api/discovery/', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {

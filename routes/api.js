@@ -91,4 +91,45 @@ router.post('/credential/', function (req, res, next) {
         });
 });
 
+router.post('/discovery/', function (req, res, next) {
+    const token = req.cookies.token;
+    const body = req.body;
+
+    axios.post(
+        `http://127.0.0.1:58000/api/v1/discovery`,
+        body,
+        {
+            headers: {
+                "X-Auth-Token": token
+            }
+        })
+        .then((response) => {
+            res.status(response.status).json(response.data)
+        })
+        .catch((error) => {
+            console.table(error.response.data);
+            console.log(error.code);
+            res.status(500).json(error);
+        });
+});
+
+
+router.delete('/discovery/:discoveryID', function (req, res, next) {
+    const token = req.cookies.token;
+    const discoveryID = req.params.discoveryID;
+
+    axios.delete(`http://127.0.0.1:58000/api/v1/discovery/${discoveryID}`, {
+        headers: {
+            "X-Auth-Token": token
+        },
+        data: {}
+    }).then((response) => {
+        res.status(response.status).json(response.data)
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).json(error);
+    });
+});
+
+
 module.exports = router;

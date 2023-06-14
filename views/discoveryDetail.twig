@@ -11,6 +11,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Detailseite</li>
                 </ol>
             </nav>
+            {% if network_devices %}
             <div class="accordion" id="network_devices_list">
                 {% for network_device in network_devices %}
 
@@ -124,6 +125,11 @@
                     </div>
                 {% endfor %}
             </div>
+            {% else %}
+            <div>
+            <h2>Keine Details vorhanden</h2>
+            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
